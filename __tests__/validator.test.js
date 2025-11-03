@@ -53,3 +53,33 @@ describe("Validator.validateWinningNumbers()", () => {
     expect(() => validator.validateWinningNumbers([1, 2, 3, 3, 4, 5])).toThrow("[ERROR] 중복된 당첨 번호가 있습니다.");
   });
 });
+
+describe("Validator.validateBonusNumber()", () => {
+  test("정상 입력일 경우 에러가 발생하지 않는다.", () => {
+    const winningNumbers = [1, 2, 3, 4, 5, 6];
+    expect(() => validator.validateBonusNumber(7, winningNumbers)).not.toThrow();
+    expect(() => validator.validateBonusNumber(45, winningNumbers)).not.toThrow();
+  });
+
+  test("보너스 번호가 1 미만일 경우 에러가 발생한다.", () => {
+    const winningNumbers = [10, 20, 30, 40, 41, 42];
+    expect(() => validator.validateBonusNumber(0, winningNumbers))
+      .toThrow("[ERROR] 보너스 번호는 1부터 45 사이의 숫자여야 합니다.");
+    expect(() => validator.validateBonusNumber(-5, winningNumbers))
+      .toThrow("[ERROR] 보너스 번호는 1부터 45 사이의 숫자여야 합니다.");
+  });
+
+  test("보너스 번호가 45 초과일 경우 에러가 발생한다.", () => {
+    const winningNumbers = [1, 2, 3, 4, 5, 6];
+    expect(() => validator.validateBonusNumber(46, winningNumbers))
+      .toThrow("[ERROR] 보너스 번호는 1부터 45 사이의 숫자여야 합니다.");
+    expect(() => validator.validateBonusNumber(100, winningNumbers))
+      .toThrow("[ERROR] 보너스 번호는 1부터 45 사이의 숫자여야 합니다.");
+  });
+
+  test("보너스 번호가 당첨 번호와 중복될 경우 에러가 발생한다.", () => {
+    const winningNumbers = [7, 8, 9, 10, 11, 12];
+    expect(() => validator.validateBonusNumber(9, winningNumbers))
+      .toThrow("[ERROR] 보너스 번호는 당첨 번호와 중복될 수 없습니다.");
+  });
+});
