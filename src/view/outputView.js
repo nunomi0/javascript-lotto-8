@@ -1,4 +1,5 @@
 import { Console } from "@woowacourse/mission-utils";
+import { PRIZE_TABLE } from "../model/constants.js";
 
 const outputView = {
   printPurchasedLottos(lottos) {
@@ -6,6 +7,23 @@ const outputView = {
     lottos.forEach((lotto) => {
       Console.print(`[${lotto.getNumbers().join(", ")}]`);
     });
+  },
+
+  printResult(result, profitRate) {
+    Console.print("\n당첨 통계");
+    Console.print("----------");
+
+    PRIZE_TABLE.forEach(({ match, bonus, amount, rank }) => {
+      let label = `${match}개 일치`;
+      if (bonus) {
+        label += ", 보너스 볼 일치";
+      }
+      label += ` (${amount.toLocaleString()}원) - ${result[rank]}개`;
+    
+      Console.print(label);
+    });
+    
+    Console.print(`총 수익률은 ${profitRate}%입니다.`);
   },
 };
 

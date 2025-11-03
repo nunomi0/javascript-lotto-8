@@ -16,6 +16,8 @@ class LottoController {
 
     const result = calculateResult(lottos, winningNumbers, bonusNumber);
     const profitRate = calculateProfit(result, purchaseAmount);
+
+    outputView.printResult(result, profitRate);
   }
 
   async getPurchaseAmount() {
