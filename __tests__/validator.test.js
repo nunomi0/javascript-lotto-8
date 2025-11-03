@@ -24,3 +24,32 @@ describe("Validator.validatePurchaseAmount()", () => {
     expect(() => validator.validatePurchaseAmount(123456)).toThrow("[ERROR] 구입 금액은 1000원 단위여야 합니다.");
   });
 });
+
+describe("Validator.validateWinningNumbers()", () => {
+  test("정상 입력일 경우 에러가 발생하지 않는다.", () => {
+    expect(() => validator.validateWinningNumbers([1, 5, 12, 23, 34, 45])).not.toThrow();
+  });
+
+  test("번호가 6개가 아닐 경우 에러가 발생한다.", () => {
+    expect(() => validator.validateWinningNumbers([1, 2, 3, 4, 5])).toThrow("[ERROR] 당첨 번호는 6개여야 합니다.");
+    expect(() => validator.validateWinningNumbers([1, 2, 3, 4, 5, 6, 7])).toThrow("[ERROR] 당첨 번호는 6개여야 합니다.");
+  });
+
+  test("중복된 번호가 있을 경우 에러가 발생한다.", () => {
+    expect(() => validator.validateWinningNumbers([1, 2, 3, 3, 4, 5])).toThrow("[ERROR] 중복된 당첨 번호가 있습니다.");
+  });
+
+  test("숫자가 아닌 값이 있을 경우 에러가 발생한다.", () => {
+    expect(() => validator.validateWinningNumbers([1, 2, "3", 4, 5, 6])).toThrow("[ERROR] 당첨 번호는 숫자여야 합니다.");
+    expect(() => validator.validateWinningNumbers([1, 2, null, 4, 5, 6])).toThrow("[ERROR] 당첨 번호는 숫자여야 합니다.");
+  });
+
+  test("1 미만의 번호가 있을 경우 에러가 발생한다.", () => {
+    expect(() => validator.validateWinningNumbers([0, 2, 3, 4, 5, 6])).toThrow("[ERROR] 로또 번호는 1부터 45 사이의 숫자여야 합니다.");
+    expect(() => validator.validateWinningNumbers([-1, 2, 3, 4, 5, 6])).toThrow("[ERROR] 로또 번호는 1부터 45 사이의 숫자여야 합니다.");
+  });
+
+  test("45 초과의 번호가 있을 경우 에러가 발생한다.", () => {
+    expect(() => validator.validateWinningNumbers([1, 2, 3, 4, 5, 46])).toThrow("[ERROR] 로또 번호는 1부터 45 사이의 숫자여야 합니다.");
+  });
+});
