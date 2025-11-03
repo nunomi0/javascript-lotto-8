@@ -12,7 +12,11 @@ const outputView = {
   printResult(result, profitRate) {
     Console.print("\n당첨 통계");
     Console.print("----------");
+    this.printStatistics(result);
+    this.printProfitRate(profitRate);
+  },
 
+  printStatistics(result) {
     PRIZE_TABLE.forEach(({ match, bonus, amount, rank }) => {
       let label = `${match}개 일치`;
       if (bonus) {
@@ -22,7 +26,9 @@ const outputView = {
     
       Console.print(label);
     });
-    
+  },
+
+  printProfitRate(profitRate) {
     Console.print(`총 수익률은 ${profitRate}%입니다.`);
   },
 };
