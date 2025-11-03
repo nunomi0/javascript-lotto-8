@@ -1,6 +1,7 @@
 import inputView from "../view/inputView.js";
 import validator from "../model/validator.js";
 import generateLottos from "../model/lottoGenerator.js";
+import calculateResult from "../model/calculateResult.js";
 
 class LottoController {
   async run() {
@@ -9,6 +10,7 @@ class LottoController {
     const bonusNumber = await this.getBonusNumber(winningNumbers);
 
     const lottos = generateLottos(purchaseAmount);
+    const result = calculateResult(lottos, winningNumbers, bonusNumber);
   }
 
   async getPurchaseAmount() {
