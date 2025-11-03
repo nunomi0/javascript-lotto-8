@@ -5,6 +5,7 @@ class LottoController {
   async run() {
     const purchaseAmount = await this.getPurchaseAmount();
     const winningNumbers = await this.getWinningNumbers();
+    const bonusNumber = await this.getBonusNumber(winningNumbers);
   }
 
   async getPurchaseAmount() {
@@ -19,6 +20,13 @@ class LottoController {
     const winningNumbers = input.split(",").map((num) => Number(num.trim()));
     validator.validateWinningNumbers(winningNumbers);
     return winningNumbers;
+  }
+
+  async getBonusNumber(winningNumbers) {
+    const input = await inputView.readBonusNumber();
+    const bonusNumber = Number(input);
+    validator.validateBonusNumber(bonusNumber, winningNumbers);
+    return bonusNumber;
   }
 }
 
