@@ -1,5 +1,5 @@
 import InputView from "./view/InputView.js";
-import { validatePurchaseAmount } from "./Validator.js";
+import { validatePurchaseAmount, validateWinningNumbers } from "./Validator.js";
 
 class App {
   async run() {
@@ -7,6 +7,8 @@ class App {
     const purchaseAmount = await InputView.readPurchaseAmount();
     validatePurchaseAmount(purchaseAmount);
 
+    const winningNumbers = await InputView.readWinningNumbers();
+    validateWinningNumbers(winningNumbers);
   }
 }
 
