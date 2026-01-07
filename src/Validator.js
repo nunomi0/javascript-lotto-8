@@ -11,4 +11,12 @@ export function validateWinningNumbers(rawNumbers) {
   for (const number of numbers){
     if (!(0<=number && number<=45)) throw new Error("[ERROR]");
   }
+  return numbers;
+}
+
+export function validateBonusNumber(bonusNumber, winningNumbers) {
+  if (!(1<=bonusNumber && bonusNumber <=45)) throw new Error("[ERROR]");
+  for (const num of winningNumbers){
+    if (bonusNumber==num) throw new Error("[ERROR]");
+  }
 }
