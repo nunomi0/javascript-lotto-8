@@ -7,26 +7,15 @@ import { Console } from "@woowacourse/mission-utils";
 
 class App {
   async run() {
-
     const purchaseAmount = await this.getPurchaseAmount();    
-    const lottoCount = purchaseAmount/1000;
-
     const winningNumbers = await this.getWinningNumbers();    
-    const bonusNumber = await this.getBonusNumber(winningNumbers);    
+    const bonusNumber = await this.getBonusNumber(winningNumbers);   
 
-    const lottoMachine = new LottoMachine(lottoCount);
-    const lottos = lottoMachine.getLottos();
-
-    OutputView.printLottoHeader(lottoCount);
-    OutputView.printLottoNumbers(lottos);
-
-    const resultCalculator = new ResultCalculator(winningNumbers, bonusNumber, lottos, purchaseAmount);
-    const ranks = resultCalculator.getRanks();
-    const profitRate = resultCalculator.getProfitRate();
-
-    OutputView.printResultHeader();
-    OutputView.printRanks(ranks);
-    OutputView.printProfitRate(profitRate);
+    const lottos = this.purchaseLotto(purchaseAmount/1000);
+    OutputView.printPurchasedLotto(purchaseAmount/1000, lottos);
+    
+    const {ranks, profitRate} = this.calculateResult(winningNumbers, bonusNumber, lottos, purchaseAmount);
+    OutputView.printResult(ranks, profitRate);
   }
 
   async getPurchaseAmount(){
@@ -60,6 +49,19 @@ class App {
       Console.print(error.message);
       return this.getBonusNumber();
     }
+  }
+
+  purchaseLotto(lottoCount){
+    const lottoMachine = new LottoMachine(lottoCount);
+    const lottos = lottoMachine.getLottos();
+    return lottos;
+  }
+
+  calculateResult(winningNumbers, bonusNumber, lottos, purchaseAmount){
+    const resultCalculator = new ResultCalculator(winningNumbers, bonusNumber, lottos, purchaseAmount);
+    const ranks = resultCalculator.getRanks();
+    const profitRate = resultCalculator.getProfitRate();
+    return {ranks, profitRate};
   }
 }
 
