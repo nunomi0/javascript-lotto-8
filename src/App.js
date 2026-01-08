@@ -2,6 +2,7 @@ import InputView from "./view/InputView.js";
 import { validatePurchaseAmount, validateWinningNumbers, validateBonusNumber } from "./Validator.js";
 import LottoMachine from "./LottoMachine.js";
 import OutputView from "./view/OutputView.js";
+import ResultCalculator from "./ResultCalculator.js";
 
 class App {
   async run() {
@@ -22,6 +23,14 @@ class App {
 
     OutputView.printLottoHeader(lottoCount);
     OutputView.printLottoNumbers(lottos);
+
+    const resultCalculator = new ResultCalculator(winningNumbers, bonusNumber, lottos, purchaseAmount);
+    const ranks = resultCalculator.getRanks();
+    const profitRate = resultCalculator.getProfitRate();
+
+    OutputView.printResultHeader();
+    OutputView.printRanks(ranks);
+    OutputView.printProfitRate(profitRate);
   }
 }
 

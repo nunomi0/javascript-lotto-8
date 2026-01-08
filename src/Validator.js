@@ -4,7 +4,8 @@ export function validatePurchaseAmount(amount) {
 
 // 당첨 번호는 로또인가? -> X: 당첨 번호 조건이 로또와는 다르게 바뀔 수 있음
 export function validateWinningNumbers(rawNumbers) {
-  const numbers = rawNumbers.split(",");
+  const numbers = rawNumbers.split(",").map((v) => Number(v.trim()));
+
   const set = new Set(numbers);
   if (numbers.length!==set.size) throw new Error("[ERROR]");
   if (numbers.length!==6) throw new Error("[ERROR]");
