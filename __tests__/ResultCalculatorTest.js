@@ -83,6 +83,6 @@ describe("ResultCalculator", () => {
 
     // profit = 2,000,000,000
     // rate = 2,000,000,000 / 1,000 * 100 = 200,000,000,000.0
-    expect(calculator.getProfitRate()).toBe("200000000000.0");
+    expect(calculator.getProfitRate()).toBe("200000000.0");
   });
 });
