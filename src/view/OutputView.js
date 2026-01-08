@@ -7,8 +7,12 @@ export default class OutputView {
 
   static async printLottoNumbers(lottos) {
     for (let i = 0; i<lottos.length; i++){
-      Console.print(lottos[i].getNumbers());
+      Console.print(`[${lottos[i].getNumbers().join(", ")}]`);
     }
+    /*
+    lottos.forEach((lotto) => {
+    Console.print(`[${lotto.getNumbers().join(", ")}]`);
+    */
   }
 
   static async printResultHeader() {
